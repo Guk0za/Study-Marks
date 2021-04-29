@@ -21,3 +21,29 @@ class Tests(unittest.TestCase):
 
             self.assertEqual(parsedLine.subjectTitle, subjectTitle)
             self.assertEqual(parsedLine.marks, marks)
+
+    def test_average_mark(self):
+        test_cases = [
+            [[5, 2], 3.5],
+            [[2, 2, 3, 3], 2.5],
+            [[5, 2, 3, 4, 4], 3.6]
+        ]
+        for test in test_cases:
+            marks_input = test[0]
+            average = test[1]
+
+            marks = MarksList("", marks_input)
+            self.assertEqual(marks.average, average)
+
+    def test_final_mark(self):
+        test_cases = [
+            [[5, 2], 4],
+            [[2, 2, 3, 3], 3],
+            [[5, 2, 3, 4, 4], 4]
+        ]
+        for test in test_cases:
+            marks_input = test[0]
+            final_mark = test[1]
+
+            marks = MarksList("", marks_input)
+            self.assertEqual(marks.final_mark, final_mark)
