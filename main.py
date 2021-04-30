@@ -1,5 +1,5 @@
 import locale
-
+import os
 
 class LocalStrings:
     language_index: int
@@ -11,6 +11,8 @@ class LocalStrings:
         self._current_marks = ["Текущие оценки", "Current marks"]
         self._count = ["Количество", "Count of"]
         self._to = ["до", "to"]
+        self._file_not_found = ['Файл не найден. Прочитайте инструкцию.', 'File not found. Read manual.']
+        self._average = ['Средний балл', 'Average']
 
     @property
     def current_marks(self):
@@ -27,7 +29,14 @@ class LocalStrings:
     @property
     def to(self):
         return self._to[self.language_index]
+    
+    @property
+    def file_not_found(self):
+        return self._file_not_found[self.language_index]
 
+    @property
+    def average(self):
+        return self._average[self.language_index]
 
 class MarksList:
     """
@@ -119,6 +128,12 @@ def print_row_statistics(row: MarksList):
 
 parser = Parser()
 local = LocalStrings(get_lang())
+
+if not os.path.exists('marks.txt'):
+    print(local.file_not_found)
+    input()
+    exit(0)
+
 file_lines = open('marks.txt').readlines()
 marks_rows = []
 
@@ -137,5 +152,6 @@ for row in marks_rows:
     print(row.subjectTitle)
     current_marks = ', '.join(list(map(lambda x: str(x), row.marks)))
     print(f'{local.current_marks}: {current_marks}')
+    print(f'{local.average}: {round(row.average, 4)} ({row.final_mark})')
     print_row_statistics(row)
     print()
