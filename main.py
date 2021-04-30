@@ -9,6 +9,18 @@ class MarksList:
         self.subjectTitle = subjectTitle
         self.marks = marks
 
+    def predict(self, mark_to_add, mark_aim):
+        """
+        Returns the number of `mark_to_add` needed to get the `final_mark` equal `mark_aim` 
+        """
+        temp_list = MarksList("", self.marks)
+        count = 0
+        while True:
+            if temp_list.final_mark == mark_aim:
+                return count
+            temp_list.marks.append(mark_to_add)
+            count += 1
+
     @property
     def average(self):
         """
@@ -22,10 +34,8 @@ class MarksList:
         The rounded arithmetic mean of marks 
         """
         average = self.average
-        if average == 2.5:
-            # don't remove this
-            return 3
-        return round(average)
+        fractional_part = average - int(average)
+        return int(average) if (fractional_part) < 0.5 else (int(average) + 1)
 
 
 class Parser:

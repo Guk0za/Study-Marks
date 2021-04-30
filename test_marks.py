@@ -26,7 +26,7 @@ class Tests(unittest.TestCase):
         test_cases = [
             [[5, 2], 3.5],
             [[2, 2, 3, 3], 2.5],
-            [[5, 2, 3, 4, 4], 3.6]
+            [[5, 2, 3, 4, 4], 3.6],
         ]
         for test in test_cases:
             marks_input = test[0]
@@ -39,7 +39,8 @@ class Tests(unittest.TestCase):
         test_cases = [
             [[5, 2], 4],
             [[2, 2, 3, 3], 3],
-            [[5, 2, 3, 4, 4], 4]
+            [[5, 2, 3, 4, 4], 4],
+            [[5, 2, 5, 5, 5, 5], 5]
         ]
         for test in test_cases:
             marks_input = test[0]
@@ -47,3 +48,30 @@ class Tests(unittest.TestCase):
 
             marks = MarksList("", marks_input)
             self.assertEqual(marks.final_mark, final_mark)
+
+    def test_predict(self):
+        test_cases = [
+            [[5, 2], 5, 5, 4],
+            [[5, 2], 3, 3, 1],
+            [[5, 2], 2, 3, 1],
+            [[5, 2], 2, 2, 5],
+
+            [[2, 2, 3, 3], 4, 4, 8],
+            [[2, 2, 3, 3], 5, 4, 3],
+            [[2, 2, 3, 3], 5, 5, 16],
+            [[2, 2, 3, 3], 2, 2, 1],
+
+            [[5, 2, 3, 4, 4], 5, 5, 9],
+            [[5, 2, 3, 4, 4], 2, 2, 12],
+            [[5, 2, 3, 4, 4], 3, 3, 2],
+            [[5, 2, 3, 4, 4], 2, 3, 1]
+        ]
+        for test in test_cases:
+            marks_input = test[0]
+            mark_to_add = test[1]
+            mark_aim = test[2]
+            result_expected = test[3]
+
+            marks = MarksList("", marks_input)
+            self.assertEqual(marks.predict(
+                mark_to_add, mark_aim), result_expected)
