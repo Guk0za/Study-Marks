@@ -150,7 +150,7 @@ for line in file_lines:
 
 for row in marks_rows:
     print(row.subjectTitle)
-    current_marks = ', '.join(list(map(lambda x: str(x), row.marks)))
+    current_marks = ' '.join(list(map(lambda x: str(x), row.marks)))
     print(f'{local.current_marks}: {current_marks}')
     print(f'{local.average}: {round(row.average, 4)} ({row.final_mark})')
     print_row_statistics(row)
