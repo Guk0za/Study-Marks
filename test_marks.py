@@ -8,7 +8,9 @@ class Tests(unittest.TestCase):
         test_cases = [
             ["Subject 123", "Subject", [1, 2, 3]],
             ["Subject Title 123456", "Subject Title", [1, 2, 3, 4, 5, 6]],
-            ["my subj name 2534", "my subj name", [2, 5, 3, 4]]
+            ["my subj name 2534", "my subj name", [2, 5, 3, 4]],
+            ["2534", "", [2, 5, 3, 4]],
+            ["5", "", [5]],
         ]
         self.parser = Parser()
 
@@ -27,6 +29,7 @@ class Tests(unittest.TestCase):
             [[5, 2], 3.5],
             [[2, 2, 3, 3], 2.5],
             [[5, 2, 3, 4, 4], 3.6],
+            [[5, 3, 4, 2, 3], 3.4]
         ]
         for test in test_cases:
             marks_input = test[0]
