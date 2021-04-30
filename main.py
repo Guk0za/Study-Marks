@@ -11,8 +11,11 @@ class LocalStrings:
         self._current_marks = ["Текущие оценки", "Current marks"]
         self._count = ["Количество", "Count of"]
         self._to = ["до", "to"]
-        self._file_not_found = ['Файл не найден. Прочитайте инструкцию.', 'File not found. Read manual.']
+        self._file_not_found = [
+            'Файл marks.txt не найден. Прочитайте инструкцию.', 'File marks.txt not found. Read manual.']
         self._average = ['Средний балл', 'Average']
+        self._file_read_error = [
+            'Ошибка во время чтения файла, проверьте кодировку', 'Error while reading file. Check encoding']
 
     @property
     def current_marks(self):
@@ -37,6 +40,11 @@ class LocalStrings:
     @property
     def average(self):
         return self._average[self.language_index]
+
+    @property
+    def file_read_error(self):
+        return self._file_read_error[self.language_index]
+
 
 class MarksList:
     """
@@ -108,6 +116,18 @@ class Parser:
             return None
 
 
+def read_file_lines() -> []:
+    try:
+        file_lines = open('marks.txt', encoding='utf8').readlines()
+    except:
+        try:
+            file_lines = open('marks.txt', encoding='ansi').readlines()
+        except:
+            print(local.file_read_error)
+            input()
+            exit(0)
+    return file_lines
+
 def get_lang():
     if 'ru' in locale.getdefaultlocale()[0]:
         return 0
@@ -134,7 +154,8 @@ if not os.path.exists('marks.txt'):
     input()
     exit(0)
 
-file_lines = open('marks.txt').readlines()
+file_lines = read_file_lines()
+
 marks_rows = []
 
 for line in file_lines:
@@ -155,3 +176,5 @@ for row in marks_rows:
     print(f'{local.average}: {round(row.average, 4)} ({row.final_mark})')
     print_row_statistics(row)
     print()
+
+input()
